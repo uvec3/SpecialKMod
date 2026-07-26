@@ -60,6 +60,14 @@
 
 #include <filesystem>
 
+//hooks for my mods
+namespace my_mod
+{
+  void draw();
+  void per_frame_update();
+}
+
+
 LONG imgui_staged_frames   = 0;
 LONG imgui_finished_frames = 0;
 BOOL imgui_staged          = FALSE;
@@ -8365,6 +8373,8 @@ SK_ImGui_StageNextFrame (void)
     if (imgui_metrics) ImGui::ShowMetricsWindow  ( );
     if (imgui_about)   ImGui::ShowAboutWindow    ( );
     if (implot_demo)   ImPlot::ShowDemoWindow    ( );
+
+    ::my_mod::draw();
   }
 
 
@@ -9346,6 +9356,8 @@ SK_ImGui_DrawFrame ( _Unreferenced_parameter_ DWORD  dwFlags,
   {
     ImGui::NewFrame ();
   }
+
+  ::my_mod::per_frame_update();
 
   SK_RenderBackend& rb =
     SK_GetCurrentRenderBackend ();
